@@ -31,7 +31,7 @@ Real-time UI Rule Engine User Management
 - Node.js 16+ 
 - Python 3.8+
 - PostgreSQL 13+
-- Docker (optional)
+- Docker 
 
 ### Installation
 
@@ -97,12 +97,12 @@ For Ethio Telecom
 - Mobile money security monitoring
 
 ## 🛠️ Technology Stack
-Component	 Technology	    Purpose
-- Frontend	React, Chart.js, Leaflet	Dashboard visualization
-- Backend	Node.js, Express, Socket.io	API and real-time communication
-- Database	PostgreSQL	Data storage and analytics
-- ML Service	Python, Flask, Scikit-learn	Anomaly detection
-- Deployment	Docker, Vercel, Railway	Cloud deployment
+Component	 - Technology	  -  Purpose
+- Frontend-	React, Chart.js, Leaflet	-Dashboard visualization
+- Backend-	Node.js, Express, Socket.io	-API and real-time communication
+- Database-	PostgreSQL	-Data storage and analytics
+- ML Service-	Python, Flask, Scikit-learn	-Anomaly detection
+- Deployment-	Docker, Vercel, Railway	-Cloud deployment
 ### 🔧 Configuration
 Environment Variables
 Copy .env.example to .env and configure:
@@ -123,8 +123,8 @@ We welcome contributions from the Ethiopian tech community! Please see our Contr
 
 ### Development Setup
 # Fork the repository
-git clone https://github.com/TsegayIS122123/BunaSIEM.git
-cd BunaSIEM
+- git clone https://github.com/TsegayIS122123/BunaSIEM.git
+- cd BunaSIEM
 # Submit a pull request
 ### 🐛 Reporting Issues
 Found a bug? Please create an issue with:
@@ -152,10 +152,10 @@ Addis Ababa University - Academic foundation
 Open Source Community - Libraries and tools that made this possible
 
 ## 📜 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the custom-license.md - see the LICENSE file for details.
 
 ## 🌍 About the Developer
-Tsegay - AAU Information Systems Student & INSA Cyber Talent Program Graduate
+Tsegay - AAU Information Systems Student & INSA Cyber Talent Summer Camp student
 
 - Githup:https://github.com/TsegayIS122123
 - LinkedIn: https://www.linkedin.com/in/tsegay-assefa-95a397336
