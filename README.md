@@ -24,7 +24,6 @@ Dashboard API Gateway Log Storage
 Amharic UI Threat Detection Alert History
 Real-time UI Rule Engine User Management
 
-text
 
 ## 🚀 Quick Start
 
@@ -58,14 +57,15 @@ docker-compose up -d
 cd backend && npm run dev
 cd ../frontend && npm run dev
 cd ../ml-service && python app.py
-Access the Application
+```
+### Access the Application
 Frontend: http://localhost:3000
 
 Backend API: http://localhost:5000
 
 ML Service: http://localhost:8000
 
-📖 Documentation
+### 📖 Documentation
 📖 Full Documentation
 
 🔧 Setup Guide
@@ -74,7 +74,7 @@ ML Service: http://localhost:8000
 
 🎬 Demo Guide
 
-🎯 Use Cases
+## 🎯 Use Cases
 For Ethiopian Banks
 Monitor AWS/Azure cloud infrastructure
 
@@ -96,7 +96,7 @@ Custom threat detection rules
 
 Mobile money security monitoring
 
-🛠️ Technology Stack
+## 🛠️ Technology Stack
 Component	Technology	Purpose
 Frontend	React, Chart.js, Leaflet	Dashboard visualization
 Backend	Node.js, Express, Socket.io	API and real-time communication
@@ -122,8 +122,7 @@ EMAIL_PASS=your_app_password
 🤝 Contributing
 We welcome contributions from the Ethiopian tech community! Please see our Contributing Guide for details.
 
-Development Setup
-bash
+### Development Setup
 # Fork the repository
 git clone https://github.com/TsegayIS122123/BunaSIEM.git
 cd BunaSIEM
@@ -136,7 +135,7 @@ npm test  # Frontend tests
 pytest    # ML service tests
 
 # Submit a pull request
-🐛 Reporting Issues
+### 🐛 Reporting Issues
 Found a bug? Please create an issue with:
 
 Description of the problem
@@ -147,24 +146,24 @@ Expected vs actual behavior
 
 Screenshots if applicable
 
-📞 Support
+## 📞 Support
 Documentation: Check our docs folder
 
 Issues: GitHub Issues
 
-Email: [Your Email] (Optional: add your contact)
+Email: tsegayassefa27@gmail.com
 
-🙏 Acknowledgments
+## 🙏 Acknowledgments
 INSA Ethiopia - Cybersecurity training and support
 
 Addis Ababa University - Academic foundation
 
 Open Source Community - Libraries and tools that made this possible
 
-📜 License
+## 📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-🌍 About the Developer
+## 🌍 About the Developer
 Tsegay - AAU Information Systems Student & INSA Cyber Talent Program Graduate
 
 https://img.shields.io/badge/GitHub-TsegayIS122123-blue
