@@ -59,13 +59,13 @@ cd ../frontend && npm run dev
 cd ../ml-service && python app.py
 ```
 ### Access the Application
-Frontend: http://localhost:3000
+- Frontend: http://localhost:3000
 
-Backend API: http://localhost:5000
+- Backend API: http://localhost:5000
 
-ML Service: http://localhost:8000
+- ML Service: http://localhost:8000
 
-### 📖 Documentation
+### Documentation
 📖 Full Documentation
 
 🔧 Setup Guide
@@ -76,64 +76,55 @@ ML Service: http://localhost:8000
 
 ## 🎯 Use Cases
 For Ethiopian Banks
-Monitor AWS/Azure cloud infrastructure
+- Monitor AWS/Azure cloud infrastructure
 
-Detect unauthorized access attempts
+- Detect unauthorized access attempts
 
-Compliance reporting for National Bank of Ethiopia
+- Compliance reporting for National Bank of Ethiopia
 
 For Government Agencies
-Real-time security monitoring
+- Real-time security monitoring
 
-Ethiopia-specific threat intelligence
+- Ethiopia-specific threat intelligence
 
-Amharic interface for local teams
+- Amharic interface for local teams
 
 For Ethio Telecom
-Cloud security for digital transformation
+- Cloud security for digital transformation
 
-Custom threat detection rules
+- Custom threat detection rules
 
-Mobile money security monitoring
+- Mobile money security monitoring
 
 ## 🛠️ Technology Stack
-Component	Technology	Purpose
-Frontend	React, Chart.js, Leaflet	Dashboard visualization
-Backend	Node.js, Express, Socket.io	API and real-time communication
-Database	PostgreSQL	Data storage and analytics
-ML Service	Python, Flask, Scikit-learn	Anomaly detection
-Deployment	Docker, Vercel, Railway	Cloud deployment
-🔧 Configuration
+Component	 Technology	    Purpose
+- Frontend	React, Chart.js, Leaflet	Dashboard visualization
+- Backend	Node.js, Express, Socket.io	API and real-time communication
+- Database	PostgreSQL	Data storage and analytics
+- ML Service	Python, Flask, Scikit-learn	Anomaly detection
+- Deployment	Docker, Vercel, Railway	Cloud deployment
+### 🔧 Configuration
 Environment Variables
 Copy .env.example to .env and configure:
 
-env
 # Database
 DATABASE_URL=postgresql://user:pass@localhost:5432/bunasiem
 
-# AWS Integration (optional)
-AWS_ACCESS_KEY_ID=your_key
-AWS_SECRET_ACCESS_KEY=your_secret
+# AWS Integration
+- AWS_ACCESS_KEY_ID=your_key
+- AWS_SECRET_ACCESS_KEY=your_secret
 
 # Email Alerts
-EMAIL_SERVICE=gmail
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
-🤝 Contributing
+- EMAIL_SERVICE=gmail
+- EMAIL_USER=your_email@gmail.com
+- EMAIL_PASS=your_app_password
+## 🤝 Contributing
 We welcome contributions from the Ethiopian tech community! Please see our Contributing Guide for details.
 
 ### Development Setup
 # Fork the repository
 git clone https://github.com/TsegayIS122123/BunaSIEM.git
 cd BunaSIEM
-
-# Create a feature branch
-git checkout -b feature/amharic-enhancements
-
-# Make your changes and test
-npm test  # Frontend tests
-pytest    # ML service tests
-
 # Submit a pull request
 ### 🐛 Reporting Issues
 Found a bug? Please create an issue with:
@@ -166,5 +157,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🌍 About the Developer
 Tsegay - AAU Information Systems Student & INSA Cyber Talent Program Graduate
 
-https://img.shields.io/badge/GitHub-TsegayIS122123-blue
-https://img.shields.io/badge/LinkedIn-Connect-blue https://www.linkedin.com/in/tsegay-assefa-95a397336
+- Githup:https://github.com/TsegayIS122123
+- LinkedIn: https://www.linkedin.com/in/tsegay-assefa-95a397336
