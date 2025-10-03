@@ -1,47 +1,36 @@
-// backend/src/models/User.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-const bcrypt = require('bcryptjs');
+// Simple in-memory user storage for development
+// Replace with PostgreSQL later
 
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+const users = [
+  {
+    id: 1,
+    username: 'admin',
+    email: 'admin@bunasiem.et',
+    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+    role: 'admin',
+    createdAt: new Date()
   },
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  role: {
-    type: DataTypes.ENUM('admin', 'user', 'viewer'),
-    defaultValue: 'user'
-  },
-  isActive: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true
+  {
+    id: 2, 
+    username: 'tsegay',
+    email: 'tsegay@bunasiem.et',
+    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+    role: 'user',
+    createdAt: new Date()
   }
-}, {
-  hooks: {
-    beforeCreate: async (user) => {
-      user.password = await bcrypt.hash(user.password, 12);
-    },
-    beforeUpdate: async (user) => {
-      if (user.changed('password')) {
-        user.password = await bcrypt.hash(user.password, 12);
-      }
+];
+
+const User = {
+  findOne: async (query) => {
+    if (query.where && query.where.username) {
+      return users.find(user => user.username === query.where.username) || null;
     }
+    return null;
+  },
+  
+  findById: async (id) => {
+    return users.find(user => user.id === parseInt(id)) || null;
   }
-});
+};
 
 module.exports = User;

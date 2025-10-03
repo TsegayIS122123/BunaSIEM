@@ -1,67 +1,126 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Search, Filter, Download, Eye, Calendar, User, MapPin } from 'lucide-react'
+import { Search, Filter, Download, Eye, Calendar, User, MapPin, AlertTriangle } from 'lucide-react'
+import { logsAPI } from '../services/api'
 
 const Logs = () => {
   const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedSeverity, setSelectedSeverity] = useState('all')
+  const [logs, setLogs] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const sampleLogs = [
-    {
-      id: 1,
-      timestamp: new Date(Date.now() - 5 * 60 * 1000),
-      source: 'AWS CloudTrail',
-      eventType: 'login',
-      user: 'admin',
-      ip: '197.156.64.25',
-      location: 'Addis Ababa, ET',
-      status: 'failure',
-      severity: 'high',
-      description: 'Multiple failed login attempts'
-    },
-    {
-      id: 2,
-      timestamp: new Date(Date.now() - 15 * 60 * 1000),
-      source: 'Azure Monitor',
-      eventType: 'file_access',
-      user: 'user123',
-      ip: '197.156.78.90',
-      location: 'Addis Ababa, ET',
-      status: 'success',
-      severity: 'low',
-      description: 'File accessed: financial_report.pdf'
-    },
-    {
-      id: 3,
-      timestamp: new Date(Date.now() - 25 * 60 * 1000),
-      source: 'Ethio Telecom',
-      eventType: 'network',
-      user: 'system',
-      ip: '194.171.12.34',
-      location: 'Dire Dawa, ET',
-      status: 'warning',
-      severity: 'medium',
-      description: 'Unusual network traffic pattern detected'
+  // Fetch real logs from backend
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        setLoading(true)
+        const response = await logsAPI.getLogs()
+        if (response.data.success) {
+          setLogs(response.data.logs)
+        }
+      } catch (err) {
+        console.error('Error fetching logs:', err)
+        setError('Failed to load logs. Please try again.')
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
+
+    fetchLogs()
+  }, [])
+
+  // Generate sample logs if no real logs available
+  const generateSampleLogs = () => {
+    const sampleLogs = [
+      {
+        id: 1,
+        timestamp: new Date(Date.now() - 5 * 60 * 1000),
+        source: 'AWS CloudTrail',
+        eventType: 'ConsoleLogin',
+        user: 'admin@bunasiem.et',
+        ip: '196.188.34.142',
+        location: 'Addis Ababa, ET',
+        severity: 'low',
+        description: 'User login successful'
+      },
+      {
+        id: 2,
+        timestamp: new Date(Date.now() - 15 * 60 * 1000),
+        source: 'Azure Monitor',
+        eventType: 'SignIn',
+        user: 'tsegay@bunasiem.et',
+        ip: '196.188.56.214',
+        location: 'Addis Ababa, ET',
+        severity: 'medium',
+        description: 'Unusual hour access detected',
+        hasAlert: true
+      },
+      {
+        id: 3,
+        timestamp: new Date(Date.now() - 25 * 60 * 1000),
+        source: 'Ethio Telecom',
+        eventType: 'NetworkAccess',
+        user: 'user@ethiotelecom.et',
+        ip: '10.10.129.225',
+        location: 'Addis Ababa, ET',
+        severity: 'low',
+        description: 'Network access from corporate office'
+      }
+    ]
+    return sampleLogs
+  }
+
+  // Use real logs or fallback to samples
+  const displayLogs = logs.length > 0 ? logs : generateSampleLogs()
 
   const getSeverityColor = (severity) => {
     const colors = {
-      high: 'bg-red-100 text-red-800',
-      medium: 'bg-yellow-100 text-yellow-800',
-      low: 'bg-green-100 text-green-800'
+      high: 'bg-red-100 text-red-800 border border-red-200',
+      medium: 'bg-yellow-100 text-yellow-800 border border-yellow-200',
+      low: 'bg-green-100 text-green-800 border border-green-200',
+      critical: 'bg-purple-100 text-purple-800 border border-purple-200'
     }
     return colors[severity] || colors.low
   }
 
-  const getStatusColor = (status) => {
-    const colors = {
-      success: 'text-green-600',
-      failure: 'text-red-600',
-      warning: 'text-yellow-600'
+  const formatTimestamp = (timestamp) => {
+    if (typeof timestamp === 'string') {
+      return new Date(timestamp).toLocaleTimeString()
     }
-    return colors[status] || colors.success
+    return timestamp.toLocaleTimeString()
+  }
+
+  const filteredLogs = displayLogs.filter(log => {
+    const matchesSearch = log.eventType?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         log.user?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         log.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    
+    const matchesSeverity = selectedSeverity === 'all' || log.severity === selectedSeverity
+    
+    return matchesSearch && matchesSeverity
+  })
+
+  if (loading) {
+    return (
+      <div className="p-6 flex items-center justify-center">
+        <div className="text-lg text-gray-600">Loading security logs...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex items-center space-x-2 text-red-800">
+            <AlertTriangle className="h-5 w-5" />
+            <span>{error}</span>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -69,15 +128,40 @@ const Logs = () => {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{t('logs.title', 'Security Logs')}</h1>
-          <p className="text-gray-600">Monitor and analyze security events in real-time</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('logs.title', 'Security Logs')}</h1>        
+          <p className="text-gray-600">
+            {logs.length > 0 
+              ? `Monitoring ${logs.length} security events in real-time` 
+              : 'Monitor and analyze security events in real-time'
+            }
+          </p>
         </div>
-        <button className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-          <Download className="h-4 w-4" />
-          <span>Export Logs</span>
-        </button>
+        <div className="flex space-x-3">
+          <button 
+            onClick={async () => {
+              try {
+                await logsAPI.simulateLogs()
+                // Refresh logs after simulation
+                const response = await logsAPI.getLogs()
+                if (response.data.success) {
+                  setLogs(response.data.logs)
+                }
+              } catch (err) {
+                console.error('Error simulating logs:', err)
+              }
+            }}
+            className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            <span>Generate Sample Logs</span>
+          </button>
+          <button className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+            <Download className="h-4 w-4" />
+            <span>Export Logs</span>
+          </button>
+        </div>
       </div>
 
+      {/* Rest of your existing JSX remains the same */}
       {/* Filters and Search */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -106,6 +190,7 @@ const Logs = () => {
               <option value="high">High</option>
               <option value="medium">Medium</option>
               <option value="low">Low</option>
+              <option value="critical">Critical</option>
             </select>
           </div>
 
@@ -135,16 +220,22 @@ const Logs = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {sampleLogs.map((log) => (
+              {filteredLogs.map((log) => (
                 <tr key={log.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {log.timestamp.toLocaleTimeString()}
+                    {formatTimestamp(log.timestamp || log.ingestedAt || log.eventTime)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{log.source}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{log.source}</td>     
                   <td className="px-6 py-4">
                     <div>
                       <div className="text-sm font-medium text-gray-900">{log.eventType}</div>
                       <div className="text-sm text-gray-500">{log.description}</div>
+                      {log.hasAlert && (
+                        <div className="flex items-center space-x-1 mt-1">
+                          <AlertTriangle className="h-3 w-3 text-yellow-500" />
+                          <span className="text-xs text-yellow-600">Alert Triggered</span>
+                        </div>
+                      )}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -157,8 +248,8 @@ const Logs = () => {
                     <div className="flex items-center space-x-2">
                       <MapPin className="h-4 w-4 text-gray-400" />
                       <div>
-                        <div className="text-sm text-gray-900">{log.ip}</div>
-                        <div className="text-xs text-gray-500">{log.location}</div>
+                        <div className="text-sm text-gray-900">{log.sourceIPAddress || log.ip}</div>
+                        <div className="text-xs text-gray-500">{log.location || 'Unknown'}</div>
                       </div>
                     </div>
                   </td>
@@ -168,7 +259,7 @@ const Logs = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <button className="text-blue-600 hover:text-blue-900 flex items-center space-x-1">
+                    <button className="text-blue-600 hover:text-blue-900 flex items-center space-x-1">    
                       <Eye className="h-4 w-4" />
                       <span>View Details</span>
                     </button>

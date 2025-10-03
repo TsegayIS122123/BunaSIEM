@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Activity, Shield, AlertTriangle, Eye, TrendingUp, Users, Database } from 'lucide-react'
+import { Activity, Shield, AlertTriangle, Eye, TrendingUp, Users, Database, CheckCircle, Clock } from 'lucide-react'
 
 const StatsGrid = ({ stats = {} }) => {
   const { t } = useTranslation()
@@ -59,6 +59,24 @@ const StatsGrid = ({ stats = {} }) => {
       change: '+15%',
       description: t('dashboard.today', 'Today'),
       trend: 'up'
+    },
+    {
+      title: 'Incidents Resolved',
+      value: stats.incidentsResolved || '189',
+      icon: CheckCircle,
+      color: 'teal',
+      change: '+18%',
+      description: 'This month',
+      trend: 'up'
+    },
+    {
+      title: 'Avg Response Time',
+      value: stats.avgResponseTime || '2.3s',
+      icon: Clock,
+      color: 'cyan',
+      change: '-0.8s',
+      description: 'Improvement',
+      trend: 'down'
     }
   ]
 
@@ -69,7 +87,9 @@ const StatsGrid = ({ stats = {} }) => {
       red: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200' },
       purple: { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
       orange: { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
-      indigo: { bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200' }
+      indigo: { bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200' },
+      teal: { bg: 'bg-teal-50', text: 'text-teal-700', border: 'border-teal-200' },
+      cyan: { bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200' }
     }
     return colors[color] || colors.blue
   }
@@ -81,7 +101,7 @@ const StatsGrid = ({ stats = {} }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
       {statCards.map((stat, index) => {
         const Icon = stat.icon
         const colorClasses = getColorClasses(stat.color)
