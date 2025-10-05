@@ -1,7 +1,66 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Search, Bell, User, LogOut, Settings, ChevronDown, Menu } from 'lucide-react'
+import { Search, Bell, User, LogOut, Settings, ChevronDown, Menu, Globe } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { Menu as HeadlessMenu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
+
+const LanguageToggle = () => {
+  const { i18n } = useTranslation()
+
+  const languages = [
+    { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸' },
+    { code: 'am', name: 'Amharic', nativeName: 'አማርኛ', flag: '🇪🇹' }
+  ]
+
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0]
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng)
+    // Save preference to localStorage
+    localStorage.setItem('bunasiem-language', lng)
+  }
+
+  // Load saved language preference on component mount
+  React.useEffect(() => {
+    const savedLanguage = localStorage.getItem('bunasiem-language')
+    if (savedLanguage && savedLanguage !== i18n.language) {
+      i18n.changeLanguage(savedLanguage)
+    }
+  }, [i18n])
+
+  return (
+    <HeadlessMenu as="div" className="relative">
+      <MenuButton className="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+        <Globe className="h-5 w-5" />
+        <span className="text-sm font-medium hidden sm:block">
+          {currentLanguage.flag} {currentLanguage.nativeName}
+        </span>
+      </MenuButton>
+      <MenuItems className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+        {languages.map((language) => (
+          <MenuItem key={language.code}>
+            {({ active }) => (
+              <button
+                onClick={() => changeLanguage(language.code)}
+                className={`flex items-center justify-between w-full px-4 py-2 text-sm ${
+                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                } ${
+                  i18n.language === language.code ? 'bg-blue-50 text-blue-700' : ''
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <span>{language.flag}</span>
+                  <span>{language.nativeName}</span>
+                </div>
+                <span className="text-xs text-gray-500">{language.name}</span>
+              </button>
+            )}
+          </MenuItem>
+        ))}
+      </MenuItems>
+    </HeadlessMenu>
+  )
+}
 
 const Header = ({ onMenuClick, systemStatus }) => {
   const { t } = useTranslation()
@@ -58,7 +117,7 @@ const Header = ({ onMenuClick, systemStatus }) => {
           <div className="lg:hidden flex items-center space-x-2">
             <div className={`w-2 h-2 rounded-full ${systemStatus?.online ? 'bg-green-500' : 'bg-red-500'}`}></div>
             <span className="text-xs text-gray-600 font-medium">
-              {systemStatus?.online ? 'Online' : 'Offline'}
+              {systemStatus?.online ? t('header.online', 'Online') : t('header.offline', 'Offline')}
             </span>
           </div>
         </div>
@@ -87,22 +146,25 @@ const Header = ({ onMenuClick, systemStatus }) => {
 
         {/* Right side - Notifications & User profile */}
         <div className="flex items-center space-x-3">
+          {/* Language Toggle */}
+          <LanguageToggle />
+
           {/* System status for desktop */}
           <div className="hidden lg:flex items-center space-x-2 bg-gray-50 px-3 py-1.5 rounded-lg">
             <div className={`w-2 h-2 rounded-full ${systemStatus?.online ? 'bg-green-500' : 'bg-red-500'}`}></div>
             <span className="text-sm text-gray-600 font-medium">
-              {systemStatus?.online ? 'System Online' : 'System Offline'}
+              {systemStatus?.online ? t('header.systemOnline', 'System Online') : t('header.systemOffline', 'System Offline')}
             </span>
             <div className="w-px h-4 bg-gray-300 mx-2"></div>
             <span className="text-sm text-gray-500">
-              {systemStatus?.logsProcessed?.toLocaleString()} logs
+              {systemStatus?.logsProcessed?.toLocaleString()} {t('header.logs', 'logs')}
             </span>
           </div>
 
           {/* Notifications */}
           <button 
             className="relative p-2 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors group"
-            aria-label="Notifications"
+            aria-label={t('header.notifications', 'Notifications')}
           >
             <Bell className="h-5 w-5 group-hover:scale-110 transition-transform" />
             <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium border-2 border-white">
@@ -115,7 +177,7 @@ const Header = ({ onMenuClick, systemStatus }) => {
             <button 
               onClick={() => setIsProfileOpen(!isProfileOpen)}
               className="flex items-center space-x-3 p-2 rounded-xl hover:bg-gray-100 transition-colors group border border-transparent hover:border-gray-200"
-              aria-label="User menu"
+              aria-label={t('header.userMenu', 'User menu')}
             >
               <div className="w-9 h-9 bg-gradient-to-br from-ethiopia-green to-green-600 rounded-full flex items-center justify-center shadow-sm group-hover:shadow transition-shadow">
                 <span className="text-white text-sm font-semibold">
@@ -124,10 +186,10 @@ const Header = ({ onMenuClick, systemStatus }) => {
               </div>
               <div className="hidden xl:block text-left">
                 <p className="text-sm font-semibold text-gray-900 group-hover:text-gray-700 transition-colors">
-                  {user?.name || 'System Admin'}
+                  {user?.name || t('header.systemAdmin', 'System Admin')}
                 </p>
                 <p className="text-xs text-gray-500 capitalize">
-                  {user?.role || 'Administrator'}
+                  {user?.role || t('header.administrator', 'Administrator')}
                 </p>
               </div>
               <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isProfileOpen ? 'rotate-180 text-gray-600' : ''}`} />
@@ -145,7 +207,7 @@ const Header = ({ onMenuClick, systemStatus }) => {
                       {user?.role}
                     </span>
                     <span className="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
-                      Verified
+                      {t('header.verified', 'Verified')}
                     </span>
                   </div>
                 </div>
