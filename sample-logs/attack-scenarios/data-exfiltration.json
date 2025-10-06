@@ -1,0 +1,37 @@
+[
+  {
+    "event_time": "2025-01-15T22:30:00Z",
+    "source": "ethio_telecom",
+    "event_type": "DataTransfer",
+    "severity": "critical",
+    "username": "backup@ethiotelecom.et",
+    "source_ip": "10.10.200.50",
+    "country_code": "ET",
+    "city": "Adama",
+    "bytes_transferred": 2147483648,
+    "description": "Large data transfer during off-hours",
+    "raw_log": {
+      "office": "Adama Data Center",
+      "protocol": "FTP",
+      "destination_ip": "197.156.80.200",
+      "duration_seconds": 7200
+    }
+  },
+  {
+    "event_time": "2025-01-15T22:45:00Z",
+    "source": "aws_cloudtrail",
+    "event_type": "GetObject",
+    "severity": "high",
+    "username": "alem@ethiotelecom.et",
+    "source_ip": "10.10.129.225",
+    "country_code": "ET",
+    "city": "Addis Ababa",
+    "bytes_transferred": 1073741824,
+    "description": "Large S3 object download",
+    "raw_log": {
+      "eventName": "GetObject",
+      "bucketName": "ethio-telecom-backup",
+      "key": "customer-data/database-backup.sql"
+    }
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "time": "2025-01-15T09:15:00Z",
+    "resourceId": "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/bunasiem-rg/providers/Microsoft.Compute/virtualMachines/web-server-01",
+    "operationName": "Microsoft.Compute/virtualMachines/start/action",
+    "operationVersion": "1.0",
+    "category": "Administrative",
+    "resultType": "Start",
+    "resultSignature": "Succeeded",
+    "durationMs": 1200,
+    "callerIpAddress": "196.188.34.179",
+    "correlationId": "abcd1234-5678-90ef-ghij-klmnopqrstuv",
+    "identity": {
+      "authorization": {
+        "scope": "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/bunasiem-rg/providers/Microsoft.Compute/virtualMachines/web-server-01",
+        "action": "Microsoft.Compute/virtualMachines/start/action",
+        "evidence": {
+          "role": "Subscription Admin"
+        }
+      },
+      "claims": {
+        "aud": "https://management.core.windows.net/",
+        "iss": "https://sts.windows.net/12345678-1234-1234-1234-123456789012/",
+        "iat": "1673781300",
+        "nbf": "1673781300",
+        "exp": "1673784900",
+        "http://schemas.microsoft.com/identity/claims/objectidentifier": "11111111-2222-3333-4444-555555555555",
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn": "admin@bunasiem.et",
+        "puid": "10032000ABCDEF1234567890ABCDEF",
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": "admin@bunasiem.et",
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname": "Admin",
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname": "User",
+        "http://schemas.microsoft.com/identity/claims/scope": "user_impersonation",
+        "http://schemas.microsoft.com/claims/authnmethodsreferences": "pwd",
+        "appid": "12345678-1234-1234-1234-123456789012",
+        "appidacr": "1",
+        "http://schemas.microsoft.com/2012/01/devicecontext/claims/identifier": "device123",
+        "http://schemas.microsoft.com/identity/claims/identityprovider": "https://sts.windows.net/12345678-1234-1234-1234-123456789012/",
+        "http://schemas.microsoft.com/identity/claims/tenantid": "12345678-1234-1234-1234-123456789012",
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": "admin@bunasiem.et",
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups": "12345678-1234-1234-1234-123456789012",
+        "ipaddr": "196.188.34.179",
+        "urname": "admin@bunasiem.et"
+      }
+    },
+    "level": "Information",
+    "location": "East US",
+    "properties": {
+      "statusCode": "OK",
+      "serviceRequestId": "abcd1234-5678-90ef-ghij-klmnopqrstuv"
+    }
+  },
+  {
+    "time": "2025-01-15T03:30:00Z",
+    "resourceId": "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/bunasiem-rg/providers/Microsoft.Sql/servers/db-server",
+    "operationName": "Microsoft.Sql/servers/firewallRules/write",
+    "operationVersion": "1.0",
+    "category": "Administrative",
+    "resultType": "Success",
+    "resultSignature": "Succeeded.OK",
+    "durationMs": 800,
+    "callerIpAddress": "197.156.78.150",
+    "correlationId": "efgh5678-9012-34ij-klmn-opqrstuvwxyz",
+    "identity": {
+      "authorization": {
+        "scope": "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/bunasiem-rg/providers/Microsoft.Sql/servers/db-server",
+        "action": "Microsoft.Sql/servers/firewallRules/write",
+        "evidence": {
+          "role": "SQL Security Admin"
+        }
+      },
+      "claims": {
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn": "tsegay@bunasiem.et",
+        "ipaddr": "197.156.78.150"
+      }
+    },
+    "level": "Information",
+    "location": "West Europe",
+    "properties": {
+      "firewallRuleName": "AllowAll",
+      "startIpAddress": "0.0.0.0",
+      "endIpAddress": "255.255.255.255",
+      "statusCode": "OK"
+    }
+  }
+]

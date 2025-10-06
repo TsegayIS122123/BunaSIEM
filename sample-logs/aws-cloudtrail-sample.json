@@ -1,0 +1,90 @@
+[
+  {
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "userName": "admin@bunasiem.et",
+      "arn": "arn:aws:iam::123456789012:user/admin"
+    },
+    "eventTime": "2025-01-15T08:30:00Z",
+    "eventSource": "signin.amazonaws.com",
+    "eventName": "ConsoleLogin",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "196.188.34.142",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "requestParameters": null,
+    "responseElements": {
+      "ConsoleLogin": "Success"
+    },
+    "additionalEventData": {
+      "LoginTo": "https://console.aws.amazon.com/",
+      "MobileVersion": "No"
+    },
+    "eventID": "a1b2c3d4-5678-90ab-cdef-123456789012",
+    "readOnly": false,
+    "eventType": "AwsConsoleSignIn",
+    "managementEvent": true,
+    "recipientAccountId": "123456789012",
+    "eventCategory": "Management",
+    "sessionContext": {
+      "attributes": {
+        "mfaAuthenticated": "false",
+        "creationDate": "2025-01-15T08:30:00Z"
+      }
+    }
+  },
+  {
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "userName": "tsegay@bunasiem.et",
+      "arn": "arn:aws:iam::123456789012:user/tsegay"
+    },
+    "eventTime": "2025-01-15T22:15:00Z",
+    "eventSource": "ec2.amazonaws.com",
+    "eventName": "DeleteSecurityGroup",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "196.188.56.214",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "requestParameters": {
+      "groupId": "sg-12345678"
+    },
+    "responseElements": {
+      "return": "true"
+    },
+    "eventID": "b2c3d4e5-6789-01ab-cdef-234567890123",
+    "readOnly": false,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "123456789012",
+    "eventCategory": "Management"
+  },
+  {
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "IAMUser",
+      "userName": "alem@ethiotelecom.et",
+      "arn": "arn:aws:iam::123456789012:user/alem"
+    },
+    "eventTime": "2025-01-15T14:45:00Z",
+    "eventSource": "s3.amazonaws.com",
+    "eventName": "GetObject",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "10.10.129.225",
+    "userAgent": "aws-cli/2.0.0",
+    "requestParameters": {
+      "bucketName": "ethio-telecom-backup",
+      "key": "customer-data/database-backup.sql"
+    },
+    "responseElements": null,
+    "additionalEventData": {
+      "bytesTransferred": 52428800
+    },
+    "eventID": "c3d4e5f6-7890-12ab-cdef-345678901234",
+    "readOnly": true,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "123456789012",
+    "eventCategory": "Data"
+  }
+]

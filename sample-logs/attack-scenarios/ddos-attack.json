@@ -1,0 +1,36 @@
+[
+  {
+    "event_time": "2025-01-15T15:00:00Z",
+    "source": "firewall",
+    "event_type": "TrafficSpike",
+    "severity": "critical",
+    "source_ip": "196.188.56.200",
+    "country_code": "ET",
+    "city": "Addis Ababa",
+    "request_count": 10000,
+    "description": "DDoS attack from Ethiopian IP range",
+    "raw_log": {
+      "protocol": "HTTP",
+      "destination_port": 80,
+      "packets_per_second": 5000,
+      "attack_type": "volumetric"
+    }
+  },
+  {
+    "event_time": "2025-01-15T15:05:00Z",
+    "source": "ids_ips",
+    "event_type": "PortScan",
+    "severity": "high",
+    "source_ip": "197.156.78.150",
+    "country_code": "ET",
+    "city": "Hawassa",
+    "request_count": 5000,
+    "description": "Port scanning activity from Ethiopian IP",
+    "raw_log": {
+      "scan_type": "TCP SYN",
+      "ports_scanned": 1000,
+      "duration_seconds": 300,
+      "target_subnet": "10.10.0.0/16"
+    }
+  }
+]

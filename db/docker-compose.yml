@@ -1,20 +1,25 @@
 version: '3.8'
 services:
   postgres:
-    image: postgres:15
-    container_name: bunasiem-db
+    image: postgres:18
+    container_name: bunasiem-postgres
     environment:
       POSTGRES_DB: bunasiem
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: 123456
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
-      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
     networks:
       - bunasiem-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

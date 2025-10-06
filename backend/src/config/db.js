@@ -1,44 +1,49 @@
-const { Pool } = require('pg');
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
-// PostgreSQL connection 
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'bunasiem',
-  password: '123456',  
-  port: 5432,
-  max: 20,
-  idleTimeoutMillis: 30000,
-});
+console.log('🔌 Attempting PostgreSQL connection...');
+console.log(` Host: ${process.env.DB_HOST}, Database: ${process.env.DB_NAME}`);
 
-// Test connection on startup
+const sequelize = new Sequelize(
+  process.env.DB_NAME || 'bunasiem',
+  process.env.DB_USER || 'postgres',
+  process.env.DB_PASSWORD || '123456',
+  {
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    logging: (msg) => console.log(` SQL: ${msg}`),
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+    retry: {
+      max: 3
+    }
+  }
+);
+
+// Test connection
 const testConnection = async () => {
   try {
-    const client = await pool.connect();
-    console.log('🎉 BunaSIEM connected to PostgreSQL 18!');
+    await sequelize.authenticate();
+    console.log(' PostgreSQL connection established successfully.');
     
-    // Test with actual data from your database
-    const stats = await client.query(`
-      SELECT 
-        (SELECT COUNT(*) FROM users) as users,
-        (SELECT COUNT(*) FROM security_logs) as logs,
-        (SELECT COUNT(*) FROM alerts) as alerts,
-        (SELECT COUNT(*) FROM threat_intelligence) as threats
-    `);
+    // Test a simple query
+    const [result] = await sequelize.query('SELECT COUNT(*) as user_count FROM users');
+    console.log(`👥 Found ${result[0].user_count} users in database`);
     
-    console.log(`📊 Database Loaded: ${stats.rows[0].users} users, ${stats.rows[0].logs} logs, ${stats.rows[0].alerts} alerts, ${stats.rows[0].threats} threats`);
-    
-    client.release();
-  } catch (err) {
-    console.error(' Database connection failed:', err.message);
-    console.log(' Make sure PostgreSQL is running and database exists');
+  } catch (error) {
+    console.error('Unable to connect to PostgreSQL:', error.message);
+    console.log(' Troubleshooting:');
+    console.log('  1. Check if PostgreSQL Docker container is running');
+    console.log('  2. Verify DB_HOST is "postgres" (Docker service name)');
+    console.log('  3. Check database credentials');
   }
 };
 
 testConnection();
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-  getClient: () => pool.connect(),
-  pool,
-};
+module.exports = sequelize;

@@ -1,35 +1,82 @@
 version: '3.8'
-
 services:
   postgres:
-    image: postgres:13
-    container_name: bunasiem-db
+    image: postgres:18
+    container_name: bunasiem-postgres
     environment:
       POSTGRES_DB: bunasiem
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password123
+      POSTGRES_PASSWORD: 123456
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    networks:
+      - bunasiem-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: bunasiem-backend
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=bunasiem
+      - DB_USER=postgres
+      - DB_PASSWORD=123456
+      - JWT_SECRET=bunasiem_ethiopia_security_2025
+      - ML_SERVICE_URL=http://ml-service:5000
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - bunasiem-network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  ml-service:
+    build:
+      context: ./ml-service
+      dockerfile: Dockerfile
+    container_name: bunasiem-ml
+    environment:
+      - ML_SERVICE_PORT=5000
+      - MODEL_PATH=/app/models/anomaly_model.pkl
+      - NODE_ENV=development
     ports:
       - "5000:5000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:password123@postgres:5432/bunasiem
-    depends_on:
-      - postgres
-
-  frontend:
-    build: ./frontend
-    container_name: bunasiem-frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+    networks:
+      - bunasiem-network
+    volumes:
+      - ./ml-service:/app
+    command: python app.py
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   postgres_data:
+
+networks:
+  bunasiem-network:
+    driver: bridge
