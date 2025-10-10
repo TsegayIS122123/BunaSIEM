@@ -38,7 +38,7 @@ const Footer = ({ systemStatus }) => {
           </div>
           
           <div className="flex items-center space-x-2 text-gray-500">
-            <span>© 2024</span>
+            <span>© 2025</span>
             <Heart className="h-3 w-3 text-red-500" />
             <span className="text-ethiopia-green font-medium">Ethiopia Cybersecurity</span>
           </div>

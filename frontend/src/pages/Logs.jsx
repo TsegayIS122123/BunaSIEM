@@ -86,10 +86,19 @@ const Logs = () => {
   }
 
   const formatTimestamp = (timestamp) => {
-    if (typeof timestamp === 'string') {
-      return new Date(timestamp).toLocaleTimeString()
+    if (!timestamp) return 'N/A'
+    
+    try {
+      if (typeof timestamp === 'string') {
+        return new Date(timestamp).toLocaleTimeString()
+      }
+      // Handle Date objects or timestamps
+      const date = timestamp instanceof Date ? timestamp : new Date(timestamp)
+      return date.toLocaleTimeString()
+    } catch (error) {
+      console.error('Error formatting timestamp:', error)
+      return 'Invalid Date'
     }
-    return timestamp.toLocaleTimeString()
   }
 
   const filteredLogs = displayLogs.filter(log => {
@@ -161,7 +170,6 @@ const Logs = () => {
         </div>
       </div>
 
-      {/* Rest of your existing JSX remains the same */}
       {/* Filters and Search */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -223,7 +231,7 @@ const Logs = () => {
               {filteredLogs.map((log) => (
                 <tr key={log.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {formatTimestamp(log.timestamp || log.ingestedAt || log.eventTime)}
+                    {formatTimestamp(log.timestamp ?? log.ingestedAt ?? log.eventTime)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{log.source}</td>     
                   <td className="px-6 py-4">

@@ -10,23 +10,23 @@ BACKUP_DIR="./backups"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 BACKUP_NAME="bunasiem_backup_$TIMESTAMP"
 
-echo "Ì≤æ Starting BunaSIEM Backup: $BACKUP_NAME"
+echo "Starting BunaSIEM Backup: $BACKUP_NAME"
 
 # Create backup directory
 mkdir -p "$BACKUP_DIR/$BACKUP_NAME"
 
 # Backup PostgreSQL database
-echo "Ì≥ä Backing up PostgreSQL database..."
+echo "Backing up PostgreSQL database..."
 docker exec bunasiem-postgres pg_dump -U postgres bunasiem > "$BACKUP_DIR/$BACKUP_NAME/database.sql"
 
 # Backup important configuration files
-echo "Ì≥Å Backing up configuration files..."
+echo " Backing up configuration files..."
 cp ../backend/.env "$BACKUP_DIR/$BACKUP_NAME/backend.env"
 cp ../ml-service/.env "$BACKUP_DIR/$BACKUP_NAME/ml-service.env"
 cp ../docker-compose.yml "$BACKUP_DIR/$BACKUP_NAME/"
 
 # Backup database schema
-echo "ÌøóÔ∏è Backing up database schema..."
+echo "ÔøΩÔøΩÔøΩÔ∏è Backing up database schema..."
 cp ../db/schema.sql "$BACKUP_DIR/$BACKUP_NAME/"
 
 # Create backup info file
@@ -48,15 +48,15 @@ Contents:
 EOL
 
 # Create compressed archive
-echo "Ì∑úÔ∏è Creating compressed archive..."
+echo "ÔøΩÔøΩÔøΩÔ∏è Creating compressed archive..."
 tar -czf "$BACKUP_DIR/$BACKUP_NAME.tar.gz" -C "$BACKUP_DIR" "$BACKUP_NAME"
 
 # Remove temporary directory
 rm -rf "$BACKUP_DIR/$BACKUP_NAME"
 
 echo "‚úÖ Backup completed: $BACKUP_DIR/$BACKUP_NAME.tar.gz"
-echo "Ì≥¶ Backup size: $(du -h "$BACKUP_DIR/$BACKUP_NAME.tar.gz" | cut -f1)"
+echo "ÔøΩÔøΩÔøΩ Backup size: $(du -h "$BACKUP_DIR/$BACKUP_NAME.tar.gz" | cut -f1)"
 
 # Cleanup old backups (keep last 7 days)
 find "$BACKUP_DIR" -name "bunasiem_backup_*.tar.gz" -mtime +7 -delete
-echo "Ì∑π Cleaned up backups older than 7 days"
+echo "ÔøΩÔøΩÔøΩ Cleaned up backups older than 7 days"

@@ -28,7 +28,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
-    message: '☕ BunaSIEM Backend is running!',
+    message: ' BunaSIEM Backend is running!',
     timestamp: new Date().toISOString()
   });
 });
@@ -36,7 +36,7 @@ app.get('/api/health', (req, res) => {
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
-    message: '☕ BunaSIEM Backend API',
+    message: ' BunaSIEM Backend API',
     version: '1.0.0',
     endpoints: {
       health: '/api/health',

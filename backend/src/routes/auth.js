@@ -26,8 +26,8 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Check password (using bcrypt.compare for the hashed password)
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    // Check password - FIXED: using password_hash from database
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
 router.get('/me', async (req, res) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
-    
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -77,8 +77,10 @@ router.get('/me', async (req, res) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'bunasiem_fallback_secret_2024');
-    const user = await User.findById(decoded.userId);
     
+    // FIXED: Using findByPk instead of findById
+    const user = await User.findByPk(decoded.userId);
+
     if (!user) {
       return res.status(404).json({
         success: false,
