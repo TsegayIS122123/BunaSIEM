@@ -4,7 +4,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/TsegayIS122123/BunaSIEM)](https://github.com/TsegayIS122123/BunaSIEM/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/TsegayIS122123/BunaSIEM)](https://github.com/TsegayIS122123/BunaSIEM/stargazers)
 
-**BunaSIEM** is Ethiopia's first cloud security monitoring solution, providing real-time threat detection with Amharic/English support. Built specifically for Ethiopian organizations moving to cloud infrastructure.
+**BunaSIEM** is Ethiopia's first cloud security monitoring solution,provides real-time monitoring, threat detection, and incident response by ingesting security logs from cloud providers (AWS, Azure, and future Ethio Telecom APIs), applying rule-based detection and machine learning (ML) anomaly detection, and visualizing results in a modern React dashboard with bilingual support Amharic & English. Built specifically for Ethiopian organizations moving to cloud infrastructure.
 
 **ቡናSIEM** - የኢትዮጵያ የደህንነት አያያዝ ስርዓት
 
