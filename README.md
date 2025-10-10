@@ -29,8 +29,8 @@ Real-time UI Rule Engine User Management
 
 ### Prerequisites
 - Node.js 16+ 
-- Python 3.8+
-- PostgreSQL 13+
+- Python 3.9+
+- PostgreSQL 18+
 - Docker 
 
 ### Installation
@@ -59,11 +59,11 @@ cd ../frontend && npm run dev
 cd ../ml-service && python app.py
 ```
 ### Access the Application
-- Frontend: http://localhost:3000
+- Frontend: http://localhost:5173
 
-- Backend API: http://localhost:5000
+- Backend API: http://localhost:3001
 
-- ML Service: http://localhost:8000
+- ML Service: http://localhost:5000
 
 ### Documentation
 📖 Full Documentation
