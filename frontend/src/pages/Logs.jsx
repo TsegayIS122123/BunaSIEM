@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Search, Filter, Download, Eye, Calendar, User, MapPin, AlertTriangle } from 'lucide-react'
 import { logsAPI } from '../services/api'
+import useWebSocket from '../hooks/useWebSocket'
 
 const Logs = () => {
   const { t } = useTranslation()

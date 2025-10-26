@@ -4,6 +4,7 @@ import { Activity, Shield, TrendingUp } from 'lucide-react'
 import StatsGrid from '../components/dashboard/StatsGrid'
 import RecentAlerts from '../components/dashboard/RecentAlerts'
 import ThreatMap from '../components/dashboard/ThreatMap'
+import useWebSocket from '../hooks/useWebSocket' 
 
 const Dashboard = ({ systemStatus }) => {
   const { t } = useTranslation()

@@ -1,9 +1,6 @@
 # Contributing to BunaSIEM
 
 Thank you for your interest in contributing to BunaSIEM! We welcome contributions from the Ethiopian tech community and beyond.
-
-## How to Contribute
-
 ### Reporting Bugs
 - Use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md)
 - Include steps to reproduce the issue
