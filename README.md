@@ -16,6 +16,7 @@
 - 📊 **Interactive Dashboard** - Real-time visualization on Ethiopia map
 - 🔔 **Multi-channel Alerts** - Email, SMS, and in-app notifications
 - 💰 **Cost-Effective** - 80% cheaper than international solutions
+![alt text](image.png)
 
 ## 🏗️ Architecture
 Frontend (React) → Backend (Node.js) → Database (PostgreSQL)
