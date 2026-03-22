@@ -17,6 +17,8 @@
 - 🔔 **Multi-channel Alerts** - Email, SMS, and in-app notifications
 - 💰 **Cost-Effective** - 80% cheaper than international solutions
 ![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
 
 ## 🏗️ Architecture
 Frontend (React) → Backend (Node.js) → Database (PostgreSQL)
